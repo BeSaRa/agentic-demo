@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  width: min(100%, 460px);
+}
+
+.tool {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 0.85rem;
+
+  &__summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  &__status {
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--muted);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  &--done &__status {
+    border-color: var(--success);
+    background: var(--success);
+    animation: none;
+  }
+
+  &__name {
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+
+  &__state {
+    margin-left: auto;
+    color: var(--muted);
+  }
+
+  &__label {
+    margin: 0;
+    padding: 0 12px;
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__code {
+    margin: 4px 12px 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

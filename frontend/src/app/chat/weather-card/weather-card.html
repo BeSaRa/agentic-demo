@@ -1,0 +1,48 @@
+@if (report(); as weather) {
+  <article class="weather" [attr.data-condition]="weather.condition">
+    <header class="weather__header">
+      <div>
+        <h3 class="weather__city">{{ weather.city }}</h3>
+        <p class="weather__condition">{{ labels[weather.condition] }}</p>
+      </div>
+      <app-weather-icon class="weather__icon" [condition]="weather.condition" />
+    </header>
+
+    <div class="weather__now">
+      <p class="weather__temperature">{{ weather.temperature }}°</p>
+      <p class="weather__range">
+        H {{ weather.high }}° · L {{ weather.low }}°<br />
+        Feels like {{ weather.feelsLike }}°
+      </p>
+    </div>
+
+    <dl class="weather__stats">
+      <div>
+        <dt>Humidity</dt>
+        <dd>{{ weather.humidity }}%</dd>
+      </div>
+      <div>
+        <dt>Wind</dt>
+        <dd>{{ weather.windKph }} km/h</dd>
+      </div>
+    </dl>
+
+    <ol class="weather__forecast">
+      @for (day of weather.forecast; track day.day) {
+        <li class="weather__day" [attr.aria-label]="day.day + ': ' + labels[day.condition]">
+          <span>{{ day.day }}</span>
+          <app-weather-icon [condition]="day.condition" />
+          <span class="weather__high">{{ day.high }}°</span>
+          <span class="weather__low">{{ day.low }}°</span>
+        </li>
+      }
+    </ol>
+  </article>
+} @else if (loading()) {
+  <div class="weather weather--loading" role="status">
+    <span class="weather__spinner" aria-hidden="true"></span>
+    Checking the weather{{ requestedCity() ? ' in ' + requestedCity() : '' }}…
+  </div>
+} @else {
+  <app-tool-call [call]="call()" />
+}

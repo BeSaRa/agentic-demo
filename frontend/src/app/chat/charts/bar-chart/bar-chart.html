@@ -1,0 +1,67 @@
+@let chart = view();
+
+@if (chart.grouped) {
+  <ul class="chart__legend">
+    @for (item of chart.legend; track item.name) {
+      <li class="chart__legend-item">
+        <span class="chart__key chart__key--box" [style.background]="item.color"></span>{{ item.name }}
+      </li>
+    }
+  </ul>
+}
+
+<div class="chart">
+  <svg class="chart__svg" role="group" [attr.viewBox]="viewBox" [attr.aria-label]="spec().title">
+    @if (chart.grouped) {
+      @for (tick of chart.ticks; track tick.value) {
+        <line class="chart__grid" [attr.x1]="chart.left" [attr.x2]="chart.right" [attr.y1]="tick.y" [attr.y2]="tick.y" />
+        <text class="chart__tick" text-anchor="end" [attr.x]="chart.left - 8" [attr.y]="tick.y + 4">
+          {{ tick.label }}
+        </text>
+      }
+    }
+
+    @for (bar of chart.bars; track bar.key) {
+      <g
+        class="bar"
+        [class.bar--active]="active() === bar.key"
+        tabindex="0"
+        role="img"
+        [attr.aria-label]="bar.name + ': ' + bar.value"
+        (pointerenter)="active.set(bar.key)"
+        (pointerleave)="active.set(null)"
+        (focus)="active.set(bar.key)"
+        (blur)="active.set(null)"
+      >
+        <rect
+          class="bar__hit"
+          [attr.x]="bar.hitX"
+          [attr.y]="chart.plotTop"
+          [attr.width]="bar.hitWidth"
+          [attr.height]="chart.plotHeight"
+        />
+        <path class="bar__mark" [attr.d]="bar.path" [style.fill]="bar.color" />
+        @if (!chart.grouped) {
+          <text class="chart__value" text-anchor="middle" [attr.x]="bar.cx" [attr.y]="bar.y - 7">{{ bar.value }}</text>
+        }
+      </g>
+    }
+
+    <line
+      class="chart__axis"
+      [attr.x1]="chart.left"
+      [attr.x2]="chart.right"
+      [attr.y1]="chart.baseline"
+      [attr.y2]="chart.baseline"
+    />
+    @for (label of chart.labels; track label.text) {
+      <text class="chart__label" text-anchor="middle" [attr.x]="label.x" [attr.y]="label.y">{{ label.text }}</text>
+    }
+  </svg>
+
+  @if (tooltip(); as tip) {
+    <div class="chart__tooltip bar-tooltip" [style.left.%]="tip.left" [style.top.%]="tip.top">
+      <strong>{{ tip.value }}</strong> {{ tip.name }}
+    </div>
+  }
+</div>

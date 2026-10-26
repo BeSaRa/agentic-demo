@@ -1,0 +1,39 @@
+@let message = item();
+
+@if (message.role === 'reasoning') {
+  <details class="message__reasoning" open>
+    <summary>Reasoning</summary>
+    <p class="message__text">{{ message.text }}</p>
+  </details>
+} @else if (message.activity; as activity) {
+  <!-- Activities work like tool results: a known type gets its own component. -->
+  @switch (activity.type) {
+    @case ('checklist') {
+      <app-checklist-activity [content]="activity.content" [live]="live()" />
+    }
+    @default {
+      <pre class="message__activity">{{ activity.content | json }}</pre>
+    }
+  }
+} @else {
+  @if (message.text) {
+    <p class="message__text message__bubble">{{ message.text }}</p>
+  }
+  <!-- Generative UI: a tool the chat knows gets its own component, the rest a generic card. -->
+  @for (call of message.toolCalls; track call.id) {
+    @switch (call.name) {
+      @case ('get_weather') {
+        <app-weather-card [call]="call" />
+      }
+      @case ('show_chart') {
+        <app-chart-card [call]="call" />
+      }
+      @case ('send_newsletter') {
+        <app-approval-card [call]="call" (answer)="answer.emit($event)" />
+      }
+      @default {
+        <app-tool-call [call]="call" />
+      }
+    }
+  }
+}

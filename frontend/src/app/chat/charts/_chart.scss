@@ -1,0 +1,97 @@
+/* Chrome shared by the chart components: axes, labels, legend and tooltip. */
+@mixin chrome {
+  :host {
+    display: block;
+  }
+
+  .chart {
+    position: relative;
+
+    &__svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+
+      &:focus-visible {
+        outline-offset: 4px;
+      }
+    }
+
+    &__grid {
+      stroke: var(--chart-grid);
+      stroke-width: 1;
+    }
+
+    &__axis {
+      stroke: var(--chart-axis);
+      stroke-width: 1;
+    }
+
+    &__tick,
+    &__label {
+      fill: var(--muted);
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &__value {
+      fill: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    &__legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+      margin: 0 0 8px;
+      padding: 0;
+      list-style: none;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+
+    &__legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    &__key {
+      width: 12px;
+      height: 2px;
+      border-radius: 1px;
+
+      &--box {
+        height: 12px;
+        border-radius: 3px;
+      }
+    }
+
+    &__tooltip {
+      position: absolute;
+      z-index: 1;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      box-shadow: 0 4px 14px rgb(0 0 0 / 0.14);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      white-space: nowrap;
+      pointer-events: none;
+
+      strong {
+        color: var(--text);
+        font-size: 0.85rem;
+      }
+    }
+
+    &__tooltip-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+
+  &:focus-within {
+    border-color: var(--accent);
+  }
+
+  &__input {
+    flex: 1;
+    max-height: 200px;
+    padding: 6px 8px;
+    border: 0;
+    background: transparent;
+    resize: none;
+    field-sizing: content;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__button {
+    padding: 7px 16px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    &--stop {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+  }
+}

@@ -1,0 +1,98 @@
+:host {
+  display: block;
+  width: min(100%, 600px);
+}
+
+.card {
+  padding: 16px 18px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  &__subtitle {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  &__toggle {
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+
+    &:hover {
+      background: var(--surface-2);
+    }
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+
+    th,
+    td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--chart-grid);
+      text-align: right;
+    }
+
+    th:first-child {
+      text-align: left;
+    }
+
+    th {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    tr:last-child > * {
+      border-bottom: 0;
+    }
+  }
+
+  &__skeleton {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    height: 120px;
+    margin-bottom: 10px;
+
+    span {
+      flex: 1;
+      border-radius: 4px 4px 0 0;
+      background: var(--surface-2);
+      animation: pulse 1.2s ease-in-out infinite;
+
+      @each $index, $height in (1: 45%, 2: 70%, 3: 55%, 4: 90%, 5: 40%, 6: 65%) {
+        &:nth-child(#{$index}) {
+          height: $height;
+          animation-delay: #{$index * 0.08}s;
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}

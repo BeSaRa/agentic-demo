@@ -1,0 +1,30 @@
+@use '../chart';
+
+@include chart.chrome;
+
+.bar {
+  outline: none;
+
+  &__hit {
+    fill: transparent;
+  }
+
+  &__mark {
+    transition: filter 0.12s;
+  }
+
+  &--active &__mark {
+    filter: brightness(1.15);
+  }
+
+  &:focus-visible &__hit {
+    stroke: var(--accent);
+    stroke-width: 2;
+    rx: 4px;
+  }
+}
+
+.bar-tooltip {
+  /* Sits above the bar's value label, centered on the bar. */
+  transform: translate(-50%, calc(-100% - 22px));
+}

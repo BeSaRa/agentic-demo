@@ -1,0 +1,159 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  font-size: 0.8rem;
+}
+
+.inspector {
+  &__section {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+
+    &--grow {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      min-height: 0;
+      border-bottom: 0;
+    }
+  }
+
+  &__bar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  &__heading {
+    margin: 0 0 8px;
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__count {
+    font-weight: 400;
+  }
+
+  &__action {
+    padding: 1px 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-family: system-ui, sans-serif;
+    font-size: 0.72rem;
+
+    &:hover {
+      background: var(--surface-2);
+    }
+
+    &--copy {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+    }
+  }
+
+  &__state {
+    max-height: 160px;
+    margin: 0;
+    overflow: auto;
+    font-family: var(--font-mono);
+  }
+
+  &__events {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style: none;
+    font-family: var(--font-mono);
+  }
+
+  &__event {
+    border-left: 3px solid var(--border);
+
+    &[data-group='RUN'] {
+      border-left-color: var(--accent);
+    }
+
+    &[data-group='TOOL'] {
+      border-left-color: var(--success);
+    }
+
+    &[data-group='STATE'] {
+      border-left-color: var(--muted);
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 3px 4px 3px 6px;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: left;
+
+    &:hover {
+      background: var(--surface-2);
+    }
+
+    &:focus-visible {
+      outline-offset: -2px;
+    }
+  }
+
+  /* A triangle that points right when collapsed and down when expanded. */
+  &__caret {
+    flex-shrink: 0;
+    border: 4px solid transparent;
+    border-right-width: 0;
+    border-left-color: var(--muted);
+    transition: transform 0.12s;
+
+    [aria-expanded='true'] > & {
+      transform: rotate(90deg);
+    }
+  }
+
+  &__type {
+    flex-shrink: 0;
+    font-weight: 600;
+  }
+
+  &__detail {
+    overflow: hidden;
+    color: var(--muted);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__payload {
+    position: relative;
+    margin: 2px 4px 6px 6px;
+    border-radius: 6px;
+    background: var(--surface-2);
+  }
+
+  &__json {
+    max-height: 320px;
+    margin: 0;
+    padding: 8px 10px;
+    overflow: auto;
+    font-family: inherit;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  &__placeholder {
+    color: var(--muted);
+    font-family: system-ui, sans-serif;
+  }
+}

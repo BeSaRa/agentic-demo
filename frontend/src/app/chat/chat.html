@@ -1,0 +1,38 @@
+<div class="chat" [class.chat--inspecting]="inspectorOpen()">
+  <main class="chat__main">
+    <header class="chat__header">
+      <div>
+        <h1 class="chat__title">AG-UI Chat</h1>
+        <p class="chat__subtitle">Angular + &#64;ag-ui/client</p>
+      </div>
+      <div class="chat__actions">
+        @if (agent.step(); as step) {
+          <span class="chat__step">{{ step }}…</span>
+        }
+        <button type="button" class="chat__button" [attr.aria-pressed]="inspectorOpen()" (click)="toggleInspector()">
+          Inspector
+        </button>
+        <button type="button" class="chat__button" (click)="agent.reset()">New chat</button>
+      </div>
+    </header>
+
+    <app-message-list
+      class="chat__messages"
+      [items]="agent.items()"
+      [running]="agent.running()"
+      (answer)="agent.answer($event.interruptId, $event.approved)"
+    />
+
+    <footer class="chat__footer">
+      @if (agent.error(); as error) {
+        <p class="chat__error" role="alert">{{ error }}</p>
+      }
+      <app-suggestions [disabled]="agent.running()" (pick)="agent.send($event)" />
+      <app-composer [running]="agent.running()" (send)="agent.send($event)" (stop)="agent.stop()" />
+    </footer>
+  </main>
+
+  @if (inspectorOpen()) {
+    <app-inspector class="chat__inspector" [state]="agent.state()" [events]="agent.events()" />
+  }
+</div>

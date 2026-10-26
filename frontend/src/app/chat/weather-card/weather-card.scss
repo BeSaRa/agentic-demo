@@ -1,0 +1,150 @@
+:host {
+  display: block;
+  width: min(100%, 380px);
+}
+
+/* The card keeps its own colors in both themes: the sky is the background. */
+.weather {
+  padding: 18px 20px 16px;
+  border-radius: 20px;
+  background: linear-gradient(160deg, #1a62c9, #3d8fe6);
+  box-shadow: 0 10px 28px rgb(20 40 80 / 0.22);
+  color: #fff;
+
+  &[data-condition='sunny'] {
+    background:
+      radial-gradient(circle at 88% 12%, rgb(255 217 90 / 0.5), transparent 42%),
+      linear-gradient(160deg, #1a62c9, #3d8fe6);
+  }
+
+  &[data-condition='partly-cloudy'] {
+    background: linear-gradient(160deg, #2f6fc4, #5f97d6);
+  }
+
+  &[data-condition='cloudy'] {
+    background: linear-gradient(160deg, #4f5d70, #75849a);
+  }
+
+  &[data-condition='rain'] {
+    background: linear-gradient(160deg, #2c3e50, #4f6d87);
+  }
+
+  &[data-condition='storm'] {
+    background: linear-gradient(160deg, #26284a, #55467f);
+  }
+
+  &[data-condition='snow'] {
+    background: linear-gradient(160deg, #3f6b9b, #6b93bf);
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  &__city {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  &__condition {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 0.9rem;
+  }
+
+  &__icon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  &__now {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    margin: 4px 0 14px;
+  }
+
+  &__temperature {
+    margin: 0;
+    font-size: 4rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  &__range {
+    margin: 0 0 6px;
+    opacity: 0.9;
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  &__stats {
+    display: flex;
+    gap: 24px;
+    margin: 0 0 14px;
+    font-size: 0.85rem;
+
+    dt {
+      opacity: 0.8;
+      font-size: 0.75rem;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+
+  &__forecast {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 0;
+    padding: 10px 4px;
+    border-radius: 14px;
+    background: rgb(255 255 255 / 0.14);
+    list-style: none;
+  }
+
+  &__day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.8rem;
+  }
+
+  &__high {
+    font-weight: 600;
+  }
+
+  &__low {
+    opacity: 0.75;
+  }
+
+  &--loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(160deg, #4f5d70, #75849a);
+    font-size: 0.9rem;
+  }
+
+  &__spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgb(255 255 255 / 0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

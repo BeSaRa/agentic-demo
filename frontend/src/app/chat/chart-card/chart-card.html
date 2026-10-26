@@ -1,0 +1,59 @@
+@if (spec(); as spec) {
+  <section class="card">
+    <header class="card__header">
+      <div>
+        <h3 class="card__title">{{ spec.title }}</h3>
+        @if (spec.subtitle) {
+          <p class="card__subtitle">{{ spec.subtitle }}</p>
+        }
+      </div>
+      <button type="button" class="card__toggle" [attr.aria-pressed]="showTable()" (click)="toggleTable()">
+        {{ showTable() ? 'Chart' : 'Table' }}
+      </button>
+    </header>
+
+    @if (showTable()) {
+      <table class="card__table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            @for (series of spec.series; track series.name) {
+              <th scope="col">{{ series.name }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows(); track row.category) {
+            <tr>
+              <th scope="row">{{ row.category }}</th>
+              @for (value of row.values; track $index) {
+                <td>{{ value }}</td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      @switch (spec.type) {
+        @case ('bar') {
+          <app-bar-chart [spec]="spec" />
+        }
+        @case ('line') {
+          <app-line-chart [spec]="spec" />
+        }
+        @case ('donut') {
+          <app-donut-chart [spec]="spec" />
+        }
+      }
+    }
+  </section>
+} @else if (loading()) {
+  <div class="card card--loading" role="status">
+    <div class="card__skeleton">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <p class="card__subtitle">Building the chart…</p>
+  </div>
+} @else {
+  <app-tool-call [call]="call()" />
+}

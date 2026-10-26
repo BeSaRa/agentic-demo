@@ -1,0 +1,16 @@
+<div #scroller class="list" (scroll)="onScroll()">
+  <div class="list__content" aria-live="polite">
+    @for (item of items(); track item.id; let last = $last) {
+      <app-chat-message [item]="item" [live]="running() && last" (answer)="answer.emit($event)" />
+    } @empty {
+      <div class="list__empty">
+        <h2 class="list__empty-title">Talk to the agent</h2>
+        <p class="list__empty-text">Pick a suggestion below, or ask for the weather or a chart.</p>
+      </div>
+    }
+
+    @if (waiting()) {
+      <div class="list__typing" aria-label="The agent is working"><span></span><span></span><span></span></div>
+    }
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<section class="inspector__section">
+  <h2 class="inspector__heading">Shared state</h2>
+  <pre class="inspector__state">{{ state() | json }}</pre>
+</section>
+
+<section class="inspector__section inspector__section--grow">
+  <header class="inspector__bar">
+    <h2 class="inspector__heading">Events <span class="inspector__count">{{ rows().length }}</span></h2>
+    @if (rows().length) {
+      <button type="button" class="inspector__action" (click)="toggleAll()">
+        {{ allExpanded() ? 'Collapse all' : 'Expand all' }}
+      </button>
+    }
+  </header>
+
+  <ol class="inspector__events">
+    @for (row of rows(); track row.seq) {
+      @let open = expanded().has(row.seq);
+      <li class="inspector__event" [attr.data-group]="row.group">
+        <button type="button" class="inspector__row" [attr.aria-expanded]="open" (click)="toggle(row.seq)">
+          <span class="inspector__caret" aria-hidden="true"></span>
+          <span class="inspector__type">{{ row.type }}</span>
+          <span class="inspector__detail">{{ row.detail }}</span>
+        </button>
+        @if (open) {
+          <div class="inspector__payload">
+            <button type="button" class="inspector__action inspector__action--copy" (click)="copy(row, json)">
+              {{ feedback()?.seq === row.seq ? feedback()?.label : 'Copy' }}
+            </button>
+            <pre #json class="inspector__json">{{ row.event | json }}</pre>
+          </div>
+        }
+      </li>
+    } @empty {
+      <li class="inspector__placeholder">Events appear here as the agent streams them.</li>
+    }
+  </ol>
+</section>

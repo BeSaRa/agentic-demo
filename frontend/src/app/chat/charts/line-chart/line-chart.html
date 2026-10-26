@@ -1,0 +1,79 @@
+@let chart = view();
+
+@if (chart.lines.length > 1) {
+  <ul class="chart__legend">
+    @for (line of chart.lines; track line.name) {
+      <li class="chart__legend-item">
+        <span class="chart__key" [style.background]="line.color"></span>{{ line.name }}
+      </li>
+    }
+  </ul>
+}
+
+<div class="chart">
+  <svg
+    #svg
+    class="chart__svg"
+    tabindex="0"
+    role="img"
+    [attr.viewBox]="viewBox"
+    [attr.aria-label]="spec().title + '. Use the left and right arrow keys to read values.'"
+    (pointermove)="onPointerMove($event)"
+    (pointerleave)="active.set(null)"
+    (keydown)="onKeydown($event)"
+    (focus)="onFocus()"
+    (blur)="active.set(null)"
+  >
+    @for (tick of chart.ticks; track tick.value) {
+      <line
+        [class]="tick.value === 0 ? 'chart__axis' : 'chart__grid'"
+        [attr.x1]="chart.left"
+        [attr.x2]="chart.right"
+        [attr.y1]="tick.y"
+        [attr.y2]="tick.y"
+      />
+      <text class="chart__tick" text-anchor="end" [attr.x]="chart.left - 8" [attr.y]="tick.y + 4">{{ tick.label }}</text>
+    }
+    @for (label of chart.labels; track label.index) {
+      <text class="chart__label" text-anchor="middle" [attr.x]="label.x" [attr.y]="chart.baseline + 17">
+        {{ label.text }}
+      </text>
+    }
+
+    @if (readout(); as point) {
+      <line
+        class="line__crosshair"
+        [attr.x1]="point.x"
+        [attr.x2]="point.x"
+        [attr.y1]="chart.plotTop"
+        [attr.y2]="chart.baseline"
+      />
+    }
+
+    @for (line of chart.lines; track line.name) {
+      <path class="line__path" [attr.d]="line.path" [style.stroke]="line.color" />
+      <circle class="line__dot" r="4" [attr.cx]="line.end.x" [attr.cy]="line.end.y" [style.fill]="line.color" />
+      @if (chart.showEndLabels) {
+        <text class="chart__value" [attr.x]="line.end.x + 10" [attr.y]="line.end.y + 4">{{ line.endLabel }}</text>
+      }
+    }
+
+    @if (readout(); as point) {
+      @for (row of point.rows; track row.name) {
+        <circle class="line__dot" r="4" [attr.cx]="point.x" [attr.cy]="row.y" [style.fill]="row.color" />
+      }
+    }
+  </svg>
+
+  @if (readout(); as point) {
+    <div class="chart__tooltip line-tooltip" [class.line-tooltip--flipped]="point.flipped" [style.left.%]="point.left">
+      {{ point.category }}
+      @for (row of point.rows; track row.name) {
+        <div class="chart__tooltip-row">
+          <span class="chart__key" [style.background]="row.color"></span>
+          <strong>{{ row.value }}</strong> {{ row.name }}
+        </div>
+      }
+    </div>
+  }
+</div>

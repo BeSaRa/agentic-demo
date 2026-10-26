@@ -1,0 +1,47 @@
+<article class="approval" [attr.data-status]="status()">
+  <header class="approval__header">
+    <span class="approval__icon" aria-hidden="true">
+      @switch (status()) {
+        @case ('working') {
+          <span class="approval__spinner"></span>
+        }
+        @case ('pending') {
+          <svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.2 8-8 9-4.8-1-8-4.4-8-9V6l8-3z" /><path d="M12 8v5M12 16.5v.01" /></svg>
+        }
+        @case ('sent') {
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M8 12.5l2.8 2.8L16 9.5" /></svg>
+        }
+        @case ('rejected') {
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M9 9l6 6M15 9l-6 6" /></svg>
+        }
+        @case ('cancelled') {
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M8 12h8" /></svg>
+        }
+      }
+    </span>
+    <div>
+      <h3 class="approval__title">{{ headline().title }}</h3>
+      @if (headline().text) {
+        <p class="approval__text">{{ headline().text }}</p>
+      }
+    </div>
+  </header>
+
+  @if (details().length) {
+    <dl class="approval__details">
+      @for (detail of details(); track detail.label) {
+        <div class="approval__detail">
+          <dt>{{ detail.label }}</dt>
+          <dd>{{ detail.value }}</dd>
+        </div>
+      }
+    </dl>
+  }
+
+  @if (status() === 'pending') {
+    <div class="approval__actions">
+      <button type="button" class="approval__button approval__button--primary" (click)="decide(true)">Approve</button>
+      <button type="button" class="approval__button" (click)="decide(false)">Reject</button>
+    </div>
+  }
+</article>

@@ -1,0 +1,15 @@
+<details class="tool" [class.tool--done]="done()">
+  <summary class="tool__summary">
+    <span class="tool__status" aria-hidden="true"></span>
+    <span class="tool__name">{{ call().name }}</span>
+    <span class="tool__state">{{ done() ? 'done' : 'running…' }}</span>
+  </summary>
+
+  <p class="tool__label">Arguments</p>
+  <pre class="tool__code">{{ args() }}</pre>
+
+  @if (done()) {
+    <p class="tool__label">Result</p>
+    <pre class="tool__code">{{ result() }}</pre>
+  }
+</details>

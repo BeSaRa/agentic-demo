@@ -1,0 +1,77 @@
+@use '../chart';
+
+@include chart.chrome;
+
+.donut {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+
+  &__svg {
+    flex: 0 0 180px;
+    width: 180px;
+    height: 180px;
+  }
+
+  &__segment {
+    outline: none;
+    transition: opacity 0.12s;
+
+    &--dimmed {
+      opacity: 0.35;
+    }
+
+    &:focus-visible {
+      stroke: var(--text);
+      stroke-width: 2;
+    }
+  }
+
+  &__total {
+    fill: var(--text);
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  &__caption {
+    fill: var(--muted);
+    font-size: 11px;
+  }
+
+  &__legend {
+    flex: 1 1 200px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.85rem;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: auto 1fr auto 3.2em;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: 6px;
+
+    &--active {
+      background: var(--surface-2);
+    }
+  }
+
+  &__name {
+    color: var(--text-secondary);
+  }
+
+  &__value {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__percent {
+    color: var(--muted);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+}

@@ -1,0 +1,39 @@
+<div class="donut">
+  <svg class="donut__svg" role="group" [attr.viewBox]="viewBox" [attr.aria-label]="spec().title">
+    @for (segment of segments(); track segment.name; let index = $index) {
+      <path
+        class="donut__segment"
+        [class.donut__segment--dimmed]="active() !== null && active() !== index"
+        tabindex="0"
+        role="img"
+        [attr.d]="segment.path"
+        [attr.aria-label]="segment.name + ': ' + segment.value + ', ' + segment.percent"
+        [style.fill]="segment.color"
+        (pointerenter)="active.set(index)"
+        (pointerleave)="active.set(null)"
+        (focus)="active.set(index)"
+        (blur)="active.set(null)"
+      />
+    }
+    <text class="donut__total" text-anchor="middle" [attr.x]="center" [attr.y]="center + 2">{{ headline().value }}</text>
+    <text class="donut__caption" text-anchor="middle" [attr.x]="center" [attr.y]="center + 20">
+      {{ headline().label }}
+    </text>
+  </svg>
+
+  <ul class="donut__legend">
+    @for (segment of segments(); track segment.name; let index = $index) {
+      <li
+        class="donut__row"
+        [class.donut__row--active]="active() === index"
+        (pointerenter)="active.set(index)"
+        (pointerleave)="active.set(null)"
+      >
+        <span class="chart__key chart__key--box" [style.background]="segment.color"></span>
+        <span class="donut__name">{{ segment.name }}</span>
+        <span class="donut__value">{{ segment.value }}</span>
+        <span class="donut__percent">{{ segment.percent }}</span>
+      </li>
+    }
+  </ul>
+</div>

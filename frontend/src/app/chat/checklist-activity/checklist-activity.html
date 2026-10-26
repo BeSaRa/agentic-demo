@@ -1,0 +1,56 @@
+@let progress = view();
+
+<section class="checklist">
+  <header class="checklist__header">
+    <h3 class="checklist__title">{{ progress.title }}</h3>
+    <span class="checklist__count">{{ progress.done }} of {{ progress.steps.length }}</span>
+  </header>
+
+  <div
+    class="checklist__track"
+    role="progressbar"
+    aria-valuemin="0"
+    [attr.aria-valuemax]="progress.steps.length"
+    [attr.aria-valuenow]="progress.done"
+    [attr.aria-label]="progress.title"
+  >
+    <div class="checklist__fill" [style.width.%]="progress.percent"></div>
+  </div>
+
+  <ol class="checklist__steps">
+    @for (step of progress.steps; track $index) {
+      <li class="checklist__step" [attr.data-status]="step.status">
+        <span class="checklist__icon" aria-hidden="true">
+          @switch (step.status) {
+            @case ('done') {
+              <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" /><path d="M6 10.4l2.6 2.6L14 7.6" /></svg>
+            }
+            @case ('running') {
+              <span class="checklist__spinner"></span>
+            }
+            @case ('stopped') {
+              <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" /><path d="M8 7v6M12 7v6" /></svg>
+            }
+            @default {
+              <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" /></svg>
+            }
+          }
+        </span>
+        <span class="checklist__label">{{ step.label }}</span>
+        <span class="checklist__detail">
+          @switch (step.status) {
+            @case ('running') {
+              In progress…
+            }
+            @case ('stopped') {
+              Stopped
+            }
+            @default {
+              {{ step.detail }}
+            }
+          }
+        </span>
+      </li>
+    }
+  </ol>
+</section>

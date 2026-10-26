@@ -1,0 +1,69 @@
+:root {
+  color-scheme: light dark;
+
+  /* Changed at runtime by the `set_theme_color` frontend tool. */
+  --accent: #4f46e5;
+  --on-accent: #fff;
+
+  --bg: light-dark(#f5f6f8, #0f1115);
+  --surface: light-dark(#fff, #171a21);
+  --surface-2: light-dark(#eef0f4, #222631);
+  --border: light-dark(#dde1e8, #2b303d);
+  --text: light-dark(#1a1d24, #e8eaf0);
+  --text-secondary: light-dark(#475467, #c3c8d4);
+  --muted: light-dark(#667085, #98a1b3);
+
+  /*
+   * Chart colors. The series order is fixed and was validated for
+   * color-blind separation against both surfaces: do not reorder or cycle.
+   */
+  --series-1: light-dark(#2a78d6, #3987e5);
+  --series-2: light-dark(#eb6834, #d95926);
+  --series-3: light-dark(#1baf7a, #199e70);
+  --series-4: light-dark(#eda100, #c98500);
+  --chart-grid: light-dark(#e6e8ee, #262b36);
+  --chart-axis: light-dark(#c4c9d4, #3a4150);
+  --danger: light-dark(#b42318, #ff8a80);
+  --warning: light-dark(#b54708, #fdb022);
+  --success: light-dark(#067647, #5fd4a0);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --font-mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

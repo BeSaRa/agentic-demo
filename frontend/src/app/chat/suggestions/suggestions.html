@@ -1,0 +1,15 @@
+<ul class="suggestions" aria-label="Suggestions">
+  @for (suggestion of suggestions; track suggestion.label) {
+    <li>
+      <button
+        type="button"
+        class="suggestions__chip"
+        [disabled]="disabled()"
+        [title]="suggestion.prompt"
+        (click)="pick.emit(suggestion.prompt)"
+      >
+        {{ suggestion.label }}
+      </button>
+    </li>
+  }
+</ul>

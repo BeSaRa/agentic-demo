@@ -1,0 +1,32 @@
+@use '../chart';
+
+@include chart.chrome;
+
+.line {
+  &__path {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* The ring in the surface color keeps a dot readable where it sits on a line. */
+  &__dot {
+    stroke: var(--surface);
+    stroke-width: 2;
+  }
+
+  &__crosshair {
+    stroke: var(--chart-axis);
+    stroke-width: 1;
+  }
+}
+
+.line-tooltip {
+  top: 8px;
+  transform: translateX(12px);
+
+  &--flipped {
+    transform: translateX(calc(-100% - 12px));
+  }
+}
